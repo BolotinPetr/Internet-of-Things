@@ -4,7 +4,7 @@ const int PhotoPin = A0;
 const int buttonPin = 12;   
 const int BUTTON =0;
 const int AUTO =1;
-int i=0;
+int i=1;
 int buttonState = 0;    
 int a=0;
 int photo = 0;
@@ -17,7 +17,7 @@ int online_prov_pred = 0;
 BLEPeripheral blePeripheral; // create peripheral instance
 BLEService lampService("19B10010-E8F2-537E-4F6C-D104768A1214"); // create service
 
-BLECharCharacteristic stateCharacteristic("19B10011-E8F2-537E-4F6C-D104768A1214", BLERead );
+BLECharCharacteristic stateCharacteristic("19B10011-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
 BLECharCharacteristic onlineCharacteristic("19B10012-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify); 
 
 void setup() {
@@ -58,7 +58,7 @@ void loop() {
                  
                  i=AUTO;
               }
-  Serial.println(a);
+  Serial.println(state);
   switch (i) {
     
   
@@ -90,12 +90,12 @@ void loop() {
       photo = analogRead(PhotoPin);
        if (a==0)
              {
-                 if (photo>850)
+                 if (photo>750)
                         {a=1;}
               }
         else
               {
-                  if (photo<200)
+                  if (photo<600)
               
                    {a=0;}
                 }
@@ -103,6 +103,7 @@ void loop() {
              
             if((light2 == 1) && (buttonState == 0))
               {
+                 light2 = (light2 + 1) % 2;
                  i=BUTTON;
                   break;
               }
