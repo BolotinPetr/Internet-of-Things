@@ -1,5 +1,3 @@
-
-
 #include <CurieBLE.h>
 const int relayPin = 10;      // the number of the LED pin
 const int PhotoPin = A0; 
@@ -110,4 +108,3 @@ void loop() {
  
   
 }
-
