@@ -10,7 +10,9 @@ int a=0;
 int photo = 0;
 int state=0;
 int statepred=2;
-int light2 = 0;
+int light2 = 1;
+int online_prov = 0;
+int online_prov_pred = 0;
 
 BLEPeripheral blePeripheral; // create peripheral instance
 BLEService lampService("19B10010-E8F2-537E-4F6C-D104768A1214"); // create service
@@ -56,14 +58,20 @@ void loop() {
                  
                  i=AUTO;
               }
-  Serial.println(i);
+  Serial.println(a);
   switch (i) {
     
   
     case BUTTON:   
           buttonState = digitalRead(buttonPin);
-          
-                 a=onlineCharacteristic.value();
+
+            online_prov = onlineCharacteristic.value();
+
+            if(online_prov_pred != online_prov)
+            {
+                   a = (a + 1) % 2;  
+              
+            }
                  
             if((light2 == 1) && (buttonState == 0))
               {
@@ -72,6 +80,7 @@ void loop() {
               }
        
           light2 = buttonState;
+          online_prov_pred = online_prov;
           delay(200);
       break;
       
