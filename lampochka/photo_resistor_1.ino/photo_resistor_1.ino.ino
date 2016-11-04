@@ -17,8 +17,8 @@ int online_prov_pred = 0;
 BLEPeripheral blePeripheral; // create peripheral instance
 BLEService lampService("19B10010-E8F2-537E-4F6C-D104768A1214"); // create service
 
-BLECharCharacteristic stateCharacteristic("19B10011-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
-BLECharCharacteristic onlineCharacteristic("19B10012-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify); 
+BLECharCharacteristic stateCharacteristic("19B10011-E8F2-537E-4F6C-D104768A1214", BLEWrite | BLERead | BLENotify);
+BLECharCharacteristic onlineCharacteristic("19B10012-E8F2-537E-4F6C-D104768A1214", BLEWrite |BLERead | BLENotify); 
 
 void setup() {
    Serial.begin(9600);
@@ -58,7 +58,7 @@ void loop() {
                  
                  i=AUTO;
               }
-  Serial.println(state);
+  Serial.println(online_prov);
   switch (i) {
     
   
