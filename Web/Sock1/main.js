@@ -55,13 +55,14 @@ app.use(express.static(__dirname + '/client'));
 app.use('/client', express.static(__dirname + '/client'));
 
 //Socket.io Event handlers
-io.on('connection', function(socket) {
-    requestHandler.userConnect(userId, connectedUsersArray);
+io.on('connection', function(socket) {  // все запросы обрабатываются по одной схеме, сначала вызывается функция обработки, 
+                                        // а потом метод .emit, чтобы это событие отобразилось в браузере.
+    requestHandler.userConnect(userId, connectedUsersArray); // включается в случае подключения нового пользователя
     io.emit('user connect', userId);    
     io.emit('connected users', connectedUsersArray);
     
-    socket.on('user disconnect', function(msg) {
-        requestHandler.userDisconnect(msg, connectedUsersArray);
+    socket.on('user disconnect', function(msg) {   // его отключения
+        requestHandler.userDisconnect(msg, connectedUsersArray); 
         io.emit('user disconnect', msg);
     });
     
