@@ -24,11 +24,16 @@ Review README.md file for in-depth information about web sockets communication
 
 */
 
+
+var noble = require('noble');
 var mraa = require('mraa'); //require mraa
 console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the Intel XDK console
 //var myOnboardLed = new mraa.Gpio(3, false, true); //LED hooked up to digital pin (or built in pin on Galileo Gen1)
 var myOnboardLed = new mraa.Gpio(13); //LED hooked up to digital pin 13 (or built in pin on Intel Galileo Gen2 as well as Intel Edison)
+var myAutoLed = new mraa.Gpio(6);
 myOnboardLed.dir(mraa.DIR_OUT); //set the gpio direction to output
+myAutoLed.dir(mraa.DIR_OUT);
+var autoState = true;
 var ledState = true; //Boolean to hold the state of Led
 
 var express = require('express');
@@ -36,7 +41,7 @@ var app = express();
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
+var requestHandler = require('./requestHandler');
 var connectedUsersArray = [];
 var userId;
 
@@ -51,41 +56,30 @@ app.use('/client', express.static(__dirname + '/client'));
 
 //Socket.io Event handlers
 io.on('connection', function(socket) {
-    console.log("\n Add new User: u"+connectedUsersArray.length);
-    if(connectedUsersArray.length > 0) {
-        var element = connectedUsersArray[connectedUsersArray.length-1];
-        userId = 'u' + (parseInt(element.replace("u", ""))+1);
-    }
-    else {
-        userId = "u0";
-    }
-    console.log('a user connected: '+userId);
-    io.emit('user connect', userId);
-    connectedUsersArray.push(userId);
-    console.log('Number of Users Connected ' + connectedUsersArray.length);
-    console.log('User(s) Connected: ' + connectedUsersArray);
+    requestHandler.userConnect(userId, connectedUsersArray);
+    io.emit('user connect', userId);    
     io.emit('connected users', connectedUsersArray);
     
     socket.on('user disconnect', function(msg) {
-        console.log('remove: ' + msg);
-        connectedUsersArray.splice(connectedUsersArray.lastIndexOf(msg), 1);
+        requestHandler.userDisconnect(msg, connectedUsersArray);
         io.emit('user disconnect', msg);
     });
     
     socket.on('chat message', function(msg) {
-        io.emit('chat message', msg);
-        console.log('message: ' + msg.value);
+        requestHandler.chatMessage(msg);
+        io.emit('chat message', msg);        
     });
     
-    socket.on('toogle led', function(msg) {
-        myOnboardLed.write(ledState?1:0); //if ledState is true then write a '1' (high) otherwise write a '0' (low)
-        msg.value = ledState;
+    socket.on('toogle led', function(msg) {        
+        ledState = requestHandler.toggleLed(msg, myOnboardLed, ledState);        
         io.emit('toogle led', msg);
-        ledState = !ledState; //invert the ledState
     });
     
+    socket.on('auto', function(msg) {
+        autoState = requestHandler.auto(msg, myAutoLed, autoState);
+        io.emit('auto', msg);        
+    });   
 });
-
 
 http.listen(3000, function(){
     console.log('Web server Active listening on *:3000');
