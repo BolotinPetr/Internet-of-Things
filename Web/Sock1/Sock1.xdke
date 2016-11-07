@@ -1,0 +1,227 @@
+{
+  "project": {
+    "projectSettingsVersion": "3.0.0",
+    "currentBuildConfiguration": null,
+    "projectFiles": {},
+    "projectDirectories": {}
+  },
+  "editorTab": {
+    "currentEditorMode": 0
+  },
+  "iot-tab": {
+    "fileStatus": {
+      "icon.png": {
+        "previousModTime": 1477083586604,
+        "modified": 1477083586604,
+        "seen": true,
+        "name": "icon.png"
+      },
+      "LICENSE.md": {
+        "previousModTime": 1477083586602,
+        "modified": 1477083586602,
+        "seen": true,
+        "name": "LICENSE.md"
+      },
+      "main.js": {
+        "previousModTime": 1478434247004,
+        "modified": 1478434247004,
+        "seen": true,
+        "name": "main.js"
+      },
+      "package.json": {
+        "previousModTime": 1477083586882,
+        "modified": 1477083586882,
+        "seen": true,
+        "name": "package.json"
+      },
+      "README.md": {
+        "previousModTime": 1477083586602,
+        "modified": 1477083586602,
+        "seen": true,
+        "name": "README.md"
+      },
+      "Sock1.xdk": {
+        "previousModTime": 1477083586602,
+        "modified": 1477083586602,
+        "seen": true,
+        "name": "Sock1.xdk"
+      },
+      "Sock1.xdke": {
+        "previousModTime": 1478435217489,
+        "modified": 1478435217489,
+        "seen": true,
+        "name": "Sock1.xdke"
+      },
+      "websockets_client.png": {
+        "previousModTime": 1477083586883,
+        "modified": 1477083586883,
+        "seen": true,
+        "name": "websockets_client.png"
+      },
+      "client/index.css": {
+        "previousModTime": 1478428946825,
+        "modified": 1478428946825,
+        "seen": true,
+        "name": "client/index.css"
+      },
+      "client/index.html": {
+        "previousModTime": 1478428946826,
+        "modified": 1478428946826,
+        "seen": true,
+        "name": "client/index.html"
+      },
+      "client/index.js": {
+        "previousModTime": 1478428946826,
+        "modified": 1478428946826,
+        "seen": true,
+        "name": "client/index.js"
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1477083586883,
+        "modified": 1477083586883,
+        "seen": true,
+        "name": "xdk/project-info.json"
+      },
+      "client/Lamp_server.zip": {
+        "previousModTime": 1478428946821,
+        "modified": 1478428946821,
+        "seen": true,
+        "name": "client/Lamp_server.zip"
+      },
+      "client/__MACOSX/Lamp_server/._index.css": {
+        "previousModTime": 1478428946824,
+        "modified": 1478428946824,
+        "seen": true,
+        "name": "client/__MACOSX/Lamp_server/._index.css"
+      },
+      "client/__MACOSX/Lamp_server/._index.html": {
+        "previousModTime": 1478428946824,
+        "modified": 1478428946824,
+        "seen": true,
+        "name": "client/__MACOSX/Lamp_server/._index.html"
+      },
+      "client/__MACOSX/Lamp_server/._index.js": {
+        "previousModTime": 1478428946825,
+        "modified": 1478428946825,
+        "seen": true,
+        "name": "client/__MACOSX/Lamp_server/._index.js"
+      },
+      "client/Lamp_server_2.zip": {
+        "previousModTime": 1478428946823,
+        "modified": 1478428946823,
+        "seen": true,
+        "name": "client/Lamp_server_2.zip"
+      },
+      "client/Lamp_server/index.css": {
+        "previousModTime": 1478428946822,
+        "modified": 1478428946822,
+        "seen": true,
+        "name": "client/Lamp_server/index.css"
+      },
+      "client/Lamp_server/index.html": {
+        "previousModTime": 1478428946822,
+        "modified": 1478428946822,
+        "seen": true,
+        "name": "client/Lamp_server/index.html"
+      },
+      "client/Lamp_server/index.js": {
+        "previousModTime": 1478428946823,
+        "modified": 1478428946823,
+        "seen": true,
+        "name": "client/Lamp_server/index.js"
+      },
+      "requestHandler.js": {
+        "previousModTime": 1478433904566,
+        "modified": 1478433904566,
+        "seen": true,
+        "name": "requestHandler.js"
+      },
+      "characteristic.js": {
+        "previousModTime": 1477759503926,
+        "modified": 1477759503926,
+        "seen": true,
+        "name": "characteristic.js"
+      },
+      "edisonBLE.js": {
+        "previousModTime": 1478434200100,
+        "modified": 1478434200100,
+        "seen": true,
+        "name": "edisonBLE.js"
+      },
+      "index.js": {
+        "previousModTime": 1477850055315,
+        "modified": 1477850055315,
+        "seen": true,
+        "name": "index.js"
+      }
+    },
+    "boardFileStatus": {
+      "icon.png": {
+        "previousModTime": 1478435485004
+      },
+      "LICENSE.md": {
+        "previousModTime": 1478435485004
+      },
+      "main.js": {
+        "previousModTime": 1478435485004
+      },
+      "package.json": {
+        "previousModTime": 1478435485004
+      },
+      "README.md": {
+        "previousModTime": 1478435485004
+      },
+      "websockets_client.png": {
+        "previousModTime": 1478435485004
+      },
+      "client/index.css": {
+        "previousModTime": 1478435485004
+      },
+      "client/index.html": {
+        "previousModTime": 1478435485004
+      },
+      "client/index.js": {
+        "previousModTime": 1478435485004
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1478435485004
+      },
+      "client/Lamp_server.zip": {
+        "previousModTime": 1478435485004
+      },
+      "client/__MACOSX/Lamp_server/._index.css": {
+        "previousModTime": 1478435485004
+      },
+      "client/__MACOSX/Lamp_server/._index.html": {
+        "previousModTime": 1478435485004
+      },
+      "client/__MACOSX/Lamp_server/._index.js": {
+        "previousModTime": 1478435485004
+      },
+      "client/Lamp_server_2.zip": {
+        "previousModTime": 1478435485004
+      },
+      "client/Lamp_server/index.css": {
+        "previousModTime": 1478435485004
+      },
+      "client/Lamp_server/index.html": {
+        "previousModTime": 1478435485004
+      },
+      "client/Lamp_server/index.js": {
+        "previousModTime": 1478435485004
+      },
+      "requestHandler.js": {
+        "previousModTime": 1478435485004
+      },
+      "characteristic.js": {
+        "previousModTime": 1478435485004
+      },
+      "edisonBLE.js": {
+        "previousModTime": 1478435485004
+      },
+      "index.js": {
+        "previousModTime": 1478435485004
+      }
+    }
+  }
+}
