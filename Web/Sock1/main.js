@@ -8,7 +8,7 @@ MRAA - Low Level Skeleton Library for Communication on GNU/Linux platforms
 Library in C/C++ to interface with Galileo & other Intel platforms, in a structured and sane API with port nanmes/numbering that match boards & with bindings to javascript & python.
 
 Steps for installing/updating MRAA & UPM Library on Intel IoT Platforms with IoTDevKit Linux* image
-Using a ssh client: 
+Using a ssh client:
 1. echo "src maa-upm http://iotdk.intel.com/repos/1.1/intelgalactic" > /etc/opkg/intel-iotdk.conf
 2. opkg update
 3. opkg upgrade
@@ -25,7 +25,7 @@ Review README.md file for in-depth information about web sockets communication
 */
 
 
-var noble = require('noble');
+var noble = require('./index');
 var mraa = require('mraa'); //require mraa
 console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the Intel XDK console
 //var myOnboardLed = new mraa.Gpio(3, false, true); //LED hooked up to digital pin (or built in pin on Galileo Gen1)
@@ -42,8 +42,13 @@ var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var requestHandler = require('./requestHandler');
+var edisonBLE = require('./edisonBLE');
 var connectedUsersArray = [];
 var userId;
+module.exports = new Noble(bindings);
+
+var friendlyMac = ['19b10010e8f2537e4f6cd104768a1214'];
+var allowDuplicates = false;
 
 app.get('/', function(req, res) {
     //Join all arguments together and normalize the resulting path.
@@ -55,33 +60,50 @@ app.use(express.static(__dirname + '/client'));
 app.use('/client', express.static(__dirname + '/client'));
 
 //Socket.io Event handlers
-io.on('connection', function(socket) {  // все запросы обрабатываются по одной схеме, сначала вызывается функция обработки, 
+io.on('connection', function(socket) {  // все запросы обрабатываются по одной схеме, сначала вызывается функция обработки,
                                         // а потом метод .emit, чтобы это событие отобразилось в браузере.
     requestHandler.userConnect(userId, connectedUsersArray); // включается в случае подключения нового пользователя
-    io.emit('user connect', userId);    
+    io.emit('user connect', userId);
     io.emit('connected users', connectedUsersArray);
-    
+
     socket.on('user disconnect', function(msg) {   // его отключения
-        requestHandler.userDisconnect(msg, connectedUsersArray); 
+        requestHandler.userDisconnect(msg, connectedUsersArray);
         io.emit('user disconnect', msg);
     });
-    
+
     socket.on('chat message', function(msg) {
         requestHandler.chatMessage(msg);
-        io.emit('chat message', msg);        
+        io.emit('chat message', msg);
     });
-    
-    socket.on('toogle led', function(msg) {        
-        ledState = requestHandler.toggleLed(msg, myOnboardLed, ledState);        
+
+    socket.on('toogle led', function(msg) {
+        ledState = requestHandler.toggleLed(msg, myOnboardLed, ledState);
+        edisonBLE.sendValue(ledState ,characteristics[1]);
         io.emit('toogle led', msg);
     });
-    
+
     socket.on('auto', function(msg) {
         autoState = requestHandler.auto(msg, myAutoLed, autoState);
-        io.emit('auto', msg);        
-    });   
+        edisonBLE.sendValue(autoState ,characteristics[0]);
+        io.emit('auto', msg);
+    });
 });
 
 http.listen(3000, function(){
     console.log('Web server Active listening on *:3000');
 });
+
+// BLE Part ------------------------------------------------------------------------------------------------------
+var peripheral;
+var services;
+var characteristics;      // - массив из характеристик, нулевой элемент - для режима авто, первый - для ручного управления
+
+noble.on('stateChange', function(state) {
+  if (state === 'poweredOn') {
+    noble.startScanning(friendlyMac, allowDuplicates);
+  } else {
+    noble.stopScanning();
+  }
+});
+
+noble.on('discover', edisonBLE.connectToDevice(peripheral, services, characteristics));

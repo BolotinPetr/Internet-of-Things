@@ -17,17 +17,17 @@ function userConnect(userId, connectedUsersArray) {
 
 function userDisconnect(msg, connectedUsersArray) {
     console.log('remove: ' +msg)
-    connectedUsersArray.splice(connectedUsersArray.lastIndexOf(msg), 1);    
+    connectedUsersArray.splice(connectedUsersArray.lastIndexOf(msg), 1);
 }
 
-function chatMessage(msg) {    
+function chatMessage(msg) {
     console.log('message: ' + msg.value);
 }
 
 function toggleLed(msg, myOnboardLed, ledState) {
     myOnboardLed.write(ledState?1:0); //if ledState is true then write a '1' (high) otherwise write a '0' (low)
-    msg.value = ledState;        
-    ledState = !ledState; //invert the ledState     
+    msg.value = ledState;
+    ledState = !ledState; //invert the ledState
     return ledState
 }
 
@@ -36,12 +36,10 @@ function auto(msg, myAutoLed, autoState) {
     msg.value = autoState;
     autoState = !autoState;
     return autoState
-}  
+}
 
 exports.userConnect = userConnect;
 exports.userDisconnect = userDisconnect;
 exports.chatMessage = chatMessage;
 exports.toggleLed = toggleLed;
 exports.auto = auto;
-
-
