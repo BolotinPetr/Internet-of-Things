@@ -4,6 +4,7 @@ var friendlyMac = ['19b10010e8f2537e4f6cd104768a1214'];
 var allowDuplicates = false;
 var noble = require('./index');
 var myCharacteristics = [];
+var mChar;
 
 
 function connectToDevice(peripheral) {
@@ -23,16 +24,18 @@ function connectToDevice(peripheral) {
   });
 }
 
-function sendValue(i){ // посылаем value в myCharacteristics[i] (0 - авто, 1 - ручной)
+function sendValue(value, i){ // посылаем value в myCharacteristics[i] (0 - авто, 1 - ручной)
+  var newValue = null;
   if (value === true){
- -    newValue = 0x01;
- -}
- -else {
- -  newValue = 0x00;
- -};
- - myCharacteristic[i].write(new Buffer([newValue]), true, function(error) {
- -  console.log('Sent value to device');
- -});
+      newValue = 0x01;
+  }
+  else {
+    newValue = 0x00;
+  }
+    mChar = myCharacteristics[0];
+    mChar.write(new Buffer([0x01]), true, function(error) {
+          console.log('set alert level to mid (1)');
+        });
 }
 
 function setupBle(){
