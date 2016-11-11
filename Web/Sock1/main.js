@@ -23,9 +23,6 @@ Develop Tab
 Review README.md file for in-depth information about web sockets communication
 
 */
-
-
-var noble = require('./index');
 var mraa = require('mraa'); //require mraa
 console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the Intel XDK console
 //var myOnboardLed = new mraa.Gpio(3, false, true); //LED hooked up to digital pin (or built in pin on Galileo Gen1)
@@ -45,10 +42,12 @@ var requestHandler = require('./requestHandler');
 var edisonBLE = require('./edisonBLE');
 var connectedUsersArray = [];
 var userId;
-module.exports = new Noble(bindings);
 
-var friendlyMac = ['19b10010e8f2537e4f6cd104768a1214'];
-var allowDuplicates = false;
+// BLE Part ------------------------------------------------------------------------------------------------------
+
+edisonBLE.setupBle(); 
+// BLE Part ------------------------------------------------------------------------------------------------------
+
 
 app.get('/', function(req, res) {
     //Join all arguments together and normalize the resulting path.
@@ -78,13 +77,13 @@ io.on('connection', function(socket) {  // все запросы обрабат�
 
     socket.on('toogle led', function(msg) {
         ledState = requestHandler.toggleLed(msg, myOnboardLed, ledState);
-        edisonBLE.sendValue(ledState ,characteristics[1]);
+        edisonBLE.sendValue(ledState ,1);
         io.emit('toogle led', msg);
     });
 
     socket.on('auto', function(msg) {
         autoState = requestHandler.auto(msg, myAutoLed, autoState);
-        edisonBLE.sendValue(autoState ,characteristics[0]);
+        edisonBLE.sendValue(autoState ,0);
         io.emit('auto', msg);
     });
 });
@@ -92,18 +91,3 @@ io.on('connection', function(socket) {  // все запросы обрабат�
 http.listen(3000, function(){
     console.log('Web server Active listening on *:3000');
 });
-
-// BLE Part ------------------------------------------------------------------------------------------------------
-var peripheral;
-var services;
-var characteristics;      // - массив из характеристик, нулевой элемент - для режима авто, первый - для ручного управления
-
-noble.on('stateChange', function(state) {
-  if (state === 'poweredOn') {
-    noble.startScanning(friendlyMac, allowDuplicates);
-  } else {
-    noble.stopScanning();
-  }
-});
-
-noble.on('discover', edisonBLE.connectToDevice(peripheral, services, characteristics));
