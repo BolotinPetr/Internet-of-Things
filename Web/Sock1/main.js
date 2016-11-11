@@ -39,13 +39,13 @@ var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var requestHandler = require('./requestHandler');
-var edisonBLE = require('./edisonBLE');
+var edisonBLE = require('./edisonBle');
 var connectedUsersArray = [];
 var userId;
 
 // BLE Part ------------------------------------------------------------------------------------------------------
 
-edisonBLE.setupBle(); 
+edisonBLE.setupBle();
 // BLE Part ------------------------------------------------------------------------------------------------------
 
 
